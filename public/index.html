@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cafe Rezervasyon Sistemi</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Cafe Rezervasyon Sistemi</h1>
+
+    <form id="rez-form">
+        <label for="isim">Adınız</label>
+        <input type="text" id="isim" required>
+
+        <label for="tarih">Tarih</label>
+        <input type="date" id="tarih" required>
+
+        <label for="zaman">Saat</label>
+        <input type="time" id="zaman" required>
+
+        <label for="misafir">Misafir Sayısı</label>
+        <input type="number" id="misafir" required>
+
+        <button type="submit">Rezervasyon Yap</button>
+        
+
+    </form>
+
+    <h2>Rezervasyon Listesi</h2>
+    <ul id="rez-list"></ul>
+
+    <script src="main.js"></script>
+    
+</body>
+</html>
