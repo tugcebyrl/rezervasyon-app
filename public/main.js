@@ -12,6 +12,8 @@
     "timeOut": "5000", // Görünürlük süresi
     "extendedTimeOut": "1000"
 };
+console.log(toastr);
+
 // Kullanıcı girişlerini tutan değişken
 let rezervasyonlar = [];
 let duzenlenenRezId = null; // Düzenlenen rezervasyon ID'si
