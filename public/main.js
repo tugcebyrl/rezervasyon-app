@@ -1,64 +1,101 @@
 // Kullanıcı girişlerini tutan değişken
-
-let rezervasyonlar=[]
-
+let rezervasyonlar = [];
+let duzenlenenRezId = null; // Düzenlenen rezervasyon ID'si
 
 document.addEventListener("DOMContentLoaded", function() {
     const rezervasyonForm = document.getElementById("rez-form");
     const rezervasyonList = document.getElementById("rez-list");
 
-    // Rezervasyon ekleme fonksiyonu
-    function rezEkle(isim,tarih,zaman,misafir){
-        const rezervasyon={
-            id: rezervasyonlar.length +1,
-            isim,
-            tarih,
-            zaman,
-            misafir
-        };
-        
-        socket.send(JSON.stringify({ type: "ekle", rezervasyon }));
+    // Rezervasyon ekleme veya güncelleme fonksiyonu
+    function rezEkleGuncelle(isim, tarih, zaman, misafir) {
+        if (!isim || !tarih || !zaman || isNaN(misafir) || misafir < 1) {
+            toastr.error("Lütfen tüm alanları eksiksiz doldurun!", "Hata");
+            return;
+        }
+
+        if (duzenlenenRezId !== null) {
+            // Güncelleme işlemi
+            const rezervasyon = {
+                id: duzenlenenRezId,
+                isim,
+                tarih,
+                zaman,
+                misafir
+            };
+            socket.send(JSON.stringify({ type: "guncelle", rezervasyon }));
+            toastr.info("Rezervasyon güncellendi!", "Güncellendi");
+            duzenlenenRezId = null; 
+        } else {
+            // Yeni rezervasyon ekleme
+            const rezervasyon = {
+                id: rezervasyonlar.length + 1,
+                isim,
+                tarih,
+                zaman,
+                misafir
+            };
+            socket.send(JSON.stringify({ type: "ekle", rezervasyon }));
+            toastr.success("Rezervasyon başarıyla eklendi!", "Başarılı");
+        }
+
+        rezervasyonForm.reset();
     }
 
-    // Rezervasyon Görüntüleme
-    function rezGoruntu(){
-        return rezervasyonlar
-    }
-
-    // Rezervasyon iptal etme
+    // Rezervasyon iptal etme fonksiyonu
     function rezIptal(id) {
-        rezervasyonlar = rezervasyonlar.filter(rezervasyon => rezervasyon.id !== id);
         socket.send(JSON.stringify({ type: "iptal", id }));
-        updateUI();
+        toastr.warning("Rezervasyon iptal edildi.", "İptal Edildi");
     }
 
-    // UI güncelleme
-    function updateUI(){
-        rezervasyonList.innerHTML=""
-        rezervasyonlar.forEach(rezervasyon=>{
-            const li=document.createElement("li")
-            li.textContent=`${rezervasyon.isim} - ${rezervasyon.tarih} - ${rezervasyon.zaman} - ${rezervasyon.misafir} kişi`
+    // Rezervasyon düzenleme fonksiyonu
+    function rezDuzenle(id) {
+        const rez = rezervasyonlar.find(r => r.id === id);
+        if (rez) {
+            document.getElementById("isim").value = rez.isim;
+            document.getElementById("tarih").value = rez.tarih;
+            document.getElementById("zaman").value = rez.zaman;
+            document.getElementById("misafir").value = rez.misafir;
+            duzenlenenRezId = id;
+            toastr.info("Rezervasyonu düzenliyorsunuz.", "Düzenleme Modu");
+        }
+    }
 
-            // Rezervasyon İptal butonu
+    // UI güncelleme fonksiyonu
+    function updateUI() {
+        rezervasyonList.innerHTML = "";
+        rezervasyonlar.forEach(rezervasyon => {
+            const li = document.createElement("li");
+            li.textContent = `${rezervasyon.isim} - ${rezervasyon.tarih} - ${rezervasyon.zaman} - ${rezervasyon.misafir} kişi`;
+
+            // İptal butonu
             const cancelBtn = document.createElement("button");
             cancelBtn.textContent = "İptal Et";
             cancelBtn.onclick = function () {
-            rezIptal(rezervasyon.id); 
-        };
+                rezIptal(rezervasyon.id);
+            };
 
-            li.appendChild(cancelBtn); // Butonu liste elemanına ekle
+            // Düzenleme butonu
+            const editBtn = document.createElement("button");
+            editBtn.textContent = "Düzenle";
+            editBtn.onclick = function () {
+                rezDuzenle(rezervasyon.id);
+            };
+
+            li.appendChild(editBtn);
+            li.appendChild(cancelBtn);
             rezervasyonList.appendChild(li);
-        })
+        });
     }
-    
+
+    // Form submit event
     rezervasyonForm.addEventListener("submit", function(event) {
         event.preventDefault();
-        const name = document.getElementById("isim").value;
+        const name = document.getElementById("isim").value.trim();
         const date = document.getElementById("tarih").value;
         const time = document.getElementById("zaman").value;
         const guest = parseInt(document.getElementById("misafir").value);
-        rezEkle(name, date, time, guest);
-        rezervasyonForm.reset();
+
+        rezEkleGuncelle(name, date, time, guest);
     });
 
     // WebSocket ile gerçek zamanlı veri güncelleme

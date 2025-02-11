@@ -64,7 +64,7 @@ button {
     cursor: pointer;
     border: none;
     border-radius: 8px;
-    background: #7cb7e8;
+    background: #9ecbef;
     color: #ffffff;
     transition: all 0.3s ease;
 }
@@ -92,4 +92,50 @@ li {
 
 li:hover {
     background: #eef6ff;
+}
+
+#rez-list {
+    list-style: none;
+    padding: 0;
+    width: 90%;
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+#rez-list li {
+    background: white;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#rez-list button {
+    padding: 8px 12px;
+    margin-left: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+#rez-list button:first-of-type {
+    background: #ffc107;
+    color: black;
+}
+
+#rez-list button:first-of-type:hover {
+    background: #e0a800;
+}
+
+#rez-list button:last-of-type {
+    background: #dc3545;
+    color: white;
+}
+
+#rez-list button:last-of-type:hover {
+    background: #b02a37;
 }

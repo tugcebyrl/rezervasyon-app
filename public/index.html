@@ -1,36 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cafe Rezervasyon Sistemi</title>
+    
+    <!-- Toastr CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Cafe Rezervasyon Sistemi</h1>
 
+    <h1>Rezervasyon Sistemi</h1>
+    
     <form id="rez-form">
-        <label for="isim">Adınız</label>
+        <label for="isim">İsim:</label>
         <input type="text" id="isim" required>
-
-        <label for="tarih">Tarih</label>
+        
+        <label for="tarih">Tarih:</label>
         <input type="date" id="tarih" required>
-
-        <label for="zaman">Saat</label>
+        
+        <label for="zaman">Saat:</label>
         <input type="time" id="zaman" required>
-
-        <label for="misafir">Misafir Sayısı</label>
-        <input type="number" id="misafir" required>
+        
+        <label for="misafir">Kişi Sayısı:</label>
+        <input type="number" id="misafir" min="1" required>
 
         <button type="submit">Rezervasyon Yap</button>
-        
-
     </form>
 
-    <h2>Rezervasyon Listesi</h2>
     <ul id="rez-list"></ul>
 
-    <script src="main.js"></script>
+    <!-- Toastr JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     
+    <script src="script.js"></script>
 </body>
 </html>
