@@ -21,12 +21,9 @@ wss.on("connection", (ws) => {
         } else if (data.type === "iptal") {
             rezervasyonlar = rezervasyonlar.filter(r => r.id !== data.id);
         } else if (data.type === "guncelle") {
-            
-            wss.clients.forEach(client => {
-                if (client.readyState === WebSocket.OPEN) {
-                    client.send(JSON.stringify(rezervasyonlar));
-                }
-            });
+            rezervasyonlar = rezervasyonlar.map(r =>
+                r.id === data.rezervasyon.id ? data.rezervasyon : r
+            );
         }       
 
         wss.clients.forEach(client => {
