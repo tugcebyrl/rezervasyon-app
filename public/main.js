@@ -1,3 +1,17 @@
+ // Toastr Başlatma Konfigürasyonu
+ toastr.options = {
+    "closeButton": true, // Kapanma butonu
+    "debug": false,
+    "newestOnTop": true,
+    "progressBar": true,
+    "positionClass": "toast-top-right", // Toast konumu
+    "preventDuplicates": true,
+    "onclick": null,
+    "showDuration": "300", // Göstermek için geçen süre
+    "hideDuration": "1000", // Gizlemek için geçen süre
+    "timeOut": "5000", // Görünürlük süresi
+    "extendedTimeOut": "1000"
+};
 // Kullanıcı girişlerini tutan değişken
 let rezervasyonlar = [];
 let duzenlenenRezId = null; // Düzenlenen rezervasyon ID'si
