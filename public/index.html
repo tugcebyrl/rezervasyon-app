@@ -35,6 +35,23 @@
     <!-- Toastr JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     
+    <script>
+        // Toastr Başlatma Konfigürasyonu
+        toastr.options = {
+            "closeButton": true, // Kapanma butonu
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right", // Toast konumu
+            "preventDuplicates": true,
+            "onclick": null,
+            "showDuration": "300", // Göstermek için geçen süre
+            "hideDuration": "1000", // Gizlemek için geçen süre
+            "timeOut": "5000", // Görünürlük süresi
+            "extendedTimeOut": "1000"
+        };
+    </script>
+    
     <script src="/main.js"></script>
 </body>
 </html>
